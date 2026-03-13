@@ -35,12 +35,14 @@ function loadUnits() {
 
      let color;
 
-     if(unit.status === "READY")
+     if(unit.status === "1")
        color = "green";
-     else if(unit.status === "NOT READY")
+     else if(unit.status === "2")
+       color = "blue";
+     else if(unit.status === "3")
        color = "red";
      else
-       color = "yellow";
+       color = "black";
 
      new google.maps.Marker({
        position:{lat:unit.lat,lng:unit.lng},
@@ -62,6 +64,7 @@ initMap();
 </body>
 
 </html>
+
 
 
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Unit Readiness Map</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwHLaFKv7C5eO9t8lDgANQ9jbsXurf2Y8"></script>
+</head>
+
+<body>
+
+<div id="map" style="height:100vh;"></div>
+
+<script>
+
+let map;
+
+function initMap() {
+
+ map = new google.maps.Map(document.getElementById("map"), {
+   zoom: 13,
+   center: {lat:59.437, lng:24.753}
+ });
+
+ loadUnits();
+
+ setInterval(loadUnits, 10000);
+}
+
+function loadUnits() {
+
+ fetch("https://script.google.com/macros/s/AKfycbwJCCkrE9RwLb50fYm9WZms2qOmwr1nO_ju_qNTvlub9_r-lpDuSun0qRASBP4WowCX/exec")
+ .then(res => res.json())
+ .then(data => {
+
+   data.forEach(unit => {
+
+     let color;
+
+     if(unit.status === "READY")
+       color = "green";
+     else if(unit.status === "NOT READY")
+       color = "red";
+     else
+       color = "yellow";
+
+     new google.maps.Marker({
+       position:{lat:unit.lat,lng:unit.lng},
+       map:map,
+       title:unit.name,
+       icon:"http://maps.google.com/mapfiles/ms/icons/"+color+"-dot.png"
+     });
+
+   });
+
+ });
+
+}
+
+initMap();
+
+</script>
+
+</body>
+</html>
